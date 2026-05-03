@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranjith Kumar — Senior Staff Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --ink: #111110;
+      --ink-muted: #6b6b65;
+      --accent: #2e6fff;
+      --accent-light: #eef2ff;
+      --rule: #ddddd8;
+      --mono: 'DM Mono', monospace;
+      --serif: 'DM Serif Display', serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 5rem 0; border-top: 1px solid var(--rule); }
+    section:first-of-type { border-top: none; }
+
+    /* ── Nav ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; backdrop-filter: blur(12px); background: rgba(247,246,242,0.88); border-bottom: 1px solid var(--rule); }
+    .nav-logo { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--ink-muted); }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.06em; text-decoration: none; color: var(--ink-muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; padding-top: 5rem; border-top: none; }
+    .hero-inner { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: end; width: 100%; }
+    .hero-tag { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .hero-tag::before { content: ''; width: 2rem; height: 1px; background: var(--accent); }
+    h1 { font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    h1 em { font-style: italic; color: var(--ink-muted); }
+    .hero-bio { font-size: 1.05rem; color: var(--ink-muted); max-width: 48ch; line-height: 1.8; }
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.06em; text-decoration: none; border-radius: 3px; transition: all 0.2s; }
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+    .btn-ghost:hover { border-color: var(--ink); }
+    .hero-stat-col { display: flex; flex-direction: column; gap: 2rem; text-align: right; }
+    .stat { border-right: 2px solid var(--accent); padding-right: 1.25rem; }
+    .stat-num { font-family: var(--serif); font-size: 2.2rem; line-height: 1; display: block; }
+    .stat-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--ink-muted); text-transform: uppercase; }
+
+    /* ── Section label ── */
+    .section-label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+    /* ── About ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: var(--ink-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem; }
+    .about-details { display: flex; flex-direction: column; }
+    .detail-row { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+    .detail-row:first-child { border-top: 1px solid var(--rule); }
+    .detail-key { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; }
+    .detail-val { font-size: 0.95rem; font-weight: 400; }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item { display: grid; grid-template-columns: 190px 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--rule); opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .exp-item.visible { opacity: 1; transform: translateY(0); }
+    .exp-meta { padding-top: 0.25rem; }
+    .exp-period { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-muted); letter-spacing: 0.04em; }
+    .exp-company { font-size: 1rem; font-weight: 500; margin-top: 0.4rem; color: var(--accent); }
+    .exp-location { font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.2rem; }
+    .exp-role { font-family: var(--serif); font-size: 1.3rem; line-height: 1.2; margin-bottom: 0.75rem; }
+    .exp-desc { color: var(--ink-muted); font-size: 0.93rem; line-height: 1.75; margin-bottom: 1rem; }
+    .sub-roles { display: flex; flex-direction: column; gap: 2rem; }
+    .sub-role { padding-left: 1rem; border-left: 2px solid var(--rule); }
+    .sub-role-period { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .sub-role-title { font-size: 0.97rem; font-weight: 500; margin-bottom: 0.6rem; line-height: 1.3; }
+    .sub-role-desc { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.72; margin-bottom: 0.75rem; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; padding: 0.3rem 0.75rem; background: var(--accent-light); color: var(--accent); border-radius: 2px; }
+
+    /* ── Skills ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--rule); }
+    .skill-group { background: var(--bg); padding: 2rem; }
+    .skill-group-name { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+    .skill-items { display: flex; flex-direction: column; gap: 0.85rem; }
+    .skill-item { display: flex; flex-direction: column; gap: 0.35rem; }
+    .skill-name { font-size: 0.88rem; font-weight: 400; }
+    .skill-bar { height: 2px; background: var(--rule); position: relative; overflow: hidden; }
+    .skill-fill { position: absolute; top: 0; left: 0; bottom: 0; background: var(--accent); width: 0; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    /* ── Publications ── */
+    .pub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); margin-bottom: 3rem; }
+    .pub-card { background: var(--bg); padding: 2rem; }
+    .pub-type { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .pub-title { font-size: 0.95rem; font-weight: 500; line-height: 1.4; margin-bottom: 0.5rem; }
+    .pub-venue { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); }
+    .pub-link { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 0.5rem; }
+    .pub-link:hover { text-decoration: underline; }
+
+    .talks-list { display: flex; flex-direction: column; }
+    .talk-item { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
+    .talk-item:first-child { border-top: 1px solid var(--rule); }
+    .talk-name { font-size: 0.95rem; font-weight: 400; }
+    .talk-conf { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); white-space: nowrap; }
+
+    /* ── Achievements ── */
+    .achieve-list { display: flex; flex-direction: column; }
+    .achieve-item { display: flex; gap: 1.5rem; align-items: baseline; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); }
+    .achieve-item:first-child { border-top: 1px solid var(--rule); }
+    .achieve-bullet { font-family: var(--serif); font-size: 1.5rem; color: var(--accent); line-height: 1; flex-shrink: 0; }
+    .achieve-text { font-size: 0.95rem; color: var(--ink-muted); line-height: 1.6; }
+    .achieve-text strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Judging ── */
+    .judge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--rule); }
+    .judge-card { background: var(--bg); padding: 1.75rem; }
+    .judge-org { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
+    .judge-role { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── Education ── */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); }
+    .edu-card { background: var(--bg); padding: 2.5rem; }
+    .edu-degree { font-family: var(--serif); font-size: 1.25rem; margin-bottom: 0.6rem; line-height: 1.2; }
+    .edu-school { font-size: 1rem; font-weight: 500; color: var(--accent); margin-bottom: 0.3rem; }
+    .edu-meta { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+    .edu-courses { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── Contact ── */
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-heading { font-family: var(--serif); font-size: 3rem; line-height: 1.1; margin-bottom: 1rem; }
+    .contact-sub { color: var(--ink-muted); font-size: 1rem; line-height: 1.7; }
+    .contact-links { display: flex; flex-direction: column; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); transition: color 0.2s; }
+    .contact-link:first-child { border-top: 1px solid var(--rule); }
+    .contact-link:hover { color: var(--accent); }
+    .contact-link-label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; }
+    .contact-link-val { font-size: 0.95rem; }
+
+    /* ── Footer ── */
+    footer { padding: 2rem 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-muted); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-tag       { animation: fadeUp 0.6s ease 0.1s both; }
+    h1              { animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-bio       { animation: fadeUp 0.6s ease 0.35s both; }
+    .hero-cta       { animation: fadeUp 0.6s ease 0.45s both; }
+    .hero-stat-col  { animation: fadeUp 0.6s ease 0.5s both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-stat-col { flex-direction: row; flex-wrap: wrap; text-align: left; }
+      .stat { border-right: none; padding-right: 0; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+      .about-grid, .edu-grid, .pub-grid, .contact-inner { grid-template-columns: 1fr; }
+      .skills-grid, .judge-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .talk-item { flex-direction: column; gap: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">SR / 2026</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#publications">Research</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <p class="hero-tag">Senior Staff Engineer · San Francisco, CA</p>
+          <h1>Ranjith<br /><em>Kumar</em></h1>
+          <p class="hero-bio">Over a decade designing, building, and scaling foundational platform infrastructure and distributed systems — from steering cross-org architecture and taking systems from 0→1, to elevating engineering teams. Outside work, I enjoy basketball and doodling!</p>
+          <div class="hero-cta">
+            <a href="#contact" class="btn btn-primary">Get in touch ↓</a>
+            <a href="#experience" class="btn btn-ghost">View my work</a>
+          </div>
+        </div>
+        <div class="hero-stat-col">
+          <div class="stat">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">Years exp.</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">Staff+</span>
+            <span class="stat-label">IC Level</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">01 — About</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I specialise in capacity management, distributed systems, and infrastructure platforms operating at global scale. At Meta, I've led architectural direction across multi-cloud environments, built observability foundations for physical infrastructure, and built high-performing engineering teams from zero.</p>
+          <p>Beyond engineering, I've published at OSDI '23 — one of the most prestigious venues in distributed systems — spoken at @Scale and QCon, and served as an expert judge for the Black Ambition Ignition Grant by Pharrell Williams and Columbia University.</p>
+        </div>
+        <div class="about-details">
+          <div class="detail-row">
+            <span class="detail-key">Location</span>
+            <span class="detail-val">San Francisco, CA</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Current Role</span>
+            <span class="detail-val">Senior Staff Engineer @ Meta</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Focus Areas</span>
+            <span class="detail-val">Distributed Systems · Capacity Mgmt · Infrastructure · Multi-cloud</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Email</span>
+            <span class="detail-val">ranji2612@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Experience ── -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label">02 — Experience</p>
+      <div class="exp-list">
+
+        <!-- Meta -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <p class="exp-period">Feb 2017 — Present</p>
+            <p class="exp-company">Meta</p>
+            <p class="exp-location">Menlo Park, CA</p>
+          </div>
+          <div class="sub-roles">
+
+            <div class="sub-role">
+              <p class="sub-role-period">Jan 2026 — Present</p>
+              <p class="sub-role-title">Senior Staff Software Engineer — Capacity Management & Fulfillment Systems</p>
+              <p class="sub-role-desc">Serving as Uber Tech Lead across capacity lifecycle systems, steering architectural direction, improving fulfillment throughput, and scaling execution across teams. Driving cross-org strategy and leading multi-cloud capacity accounting pilots to eliminate product and platform fragmentation across on-prem and cloud environments.</p>
+              <div class="tag-list">
+                <span class="tag">Capacity Planning</span><span class="tag">Multi-cloud</span><span class="tag">Tech Lead</span><span class="tag">Fulfillment Systems</span>
+              </div>
+            </div>
+
+            <div class="sub-role">
+              <p class="sub-role-period">Mar 2024 — Jan 2026</p>
+              <p class="sub-role-title">Staff Software Engineer — Capacity Observability & Management Systems</p>
+              <p class="sub-role-desc">Founded and scaled the Capacity Observability team, achieving high-confidence measurement of abstract physical resources distributed across various pillars and infrastructure domains. Held comprehensive technical leadership encompassing both capacity management and observability system teams, establishing strategic direction and fostering team growth.</p>
+              <div class="tag-list">
+                <span class="tag">Observability</span><span class="tag">Team Building</span><span class="tag">Data Centers</span><span class="tag">Reliability</span>
+              </div>
+            </div>
+
+            <div class="sub-role">
+              <p class="sub-role-period">Jan 2021 — Mar 2024</p>
+              <p class="sub-role-title">Staff Software Engineer — Global Capacity Management</p>
+              <p class="sub-role-desc">Created and led a team building an automation suite enabling seamless execution of production traffic. Played a critical role in setting strategic goals and expanding the team, driving alignment across multiple teams and systems. Fostered strong cross-functional partnerships and provided mentorship that elevated team members' professional growth.</p>
+              <div class="tag-list">
+                <span class="tag">Automation</span><span class="tag">Production Traffic</span><span class="tag">Strategic Planning</span><span class="tag">Cross-functional</span>
+              </div>
+            </div>
+
+            <div class="sub-role">
+              <p class="sub-role-period">Jan 2019 — Jan 2021</p>
+              <p class="sub-role-title">Senior Software Engineer — Capacity Management Systems & Interfaces</p>
+              <p class="sub-role-desc">Led development of hierarchical capacity management systems enabling multiple capacity product offerings and efficient, reliable resource allocation across large-scale infrastructure. Spearheaded the creation of automated migration tools, streamlining resource transfers between systems and significantly reducing operational overhead.</p>
+              <div class="tag-list">
+                <span class="tag">Hierarchical Systems</span><span class="tag">Resource Allocation</span><span class="tag">Migration Automation</span>
+              </div>
+            </div>
+
+            <div class="sub-role">
+              <p class="sub-role-period">Feb 2017 — Jan 2019</p>
+              <p class="sub-role-title">Senior Software Engineer — Autoscaling</p>
+              <p class="sub-role-desc">Instrumental in building the autoscaling system from 0→1 — dynamically allocating and de-allocating compute resources in response to fluctuating demand, handling downsizes during off-peak hours for substantial cost reductions and efficiency improvements. Led rapid adoption and scaling across numerous services and applications.</p>
+              <div class="tag-list">
+                <span class="tag">Autoscaling</span><span class="tag">0→1</span><span class="tag">Resource Allocation</span><span class="tag">Cost Optimisation</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Columbia Research -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <p class="exp-period">Dec 2015 — May 2016</p>
+            <p class="exp-company">Columbia University</p>
+            <p class="exp-location">New York, NY</p>
+          </div>
+          <div>
+            <h3 class="exp-role">Graduate Research Assistant</h3>
+            <p class="exp-desc">Tow Center for Digital Journalism — Developed a web-based crowd-sourced document transcription platform for journalists and the public, enabling collaborative access to archival and investigative materials.</p>
+            <div class="tag-list">
+              <span class="tag">Research</span><span class="tag">Web Platform</span><span class="tag">Crowd-sourcing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oracle -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <p class="exp-period">May 2013 — Jun 2015</p>
+            <p class="exp-company">Oracle</p>
+            <p class="exp-location">Hyderabad, India</p>
+          </div>
+          <div>
+            <h3 class="exp-role">Application Engineer — PPM Tech Team, Fusion Projects</h3>
+            <p class="exp-desc">Developed solutions meeting functional specifications for enterprise business software, building new features and improving user experience. Built several developer productivity tools including Social Bookmarking, Merge Analytics, and LogTroopers.</p>
+            <div class="tag-list">
+              <span class="tag">Enterprise Software</span><span class="tag">Java</span><span class="tag">Developer Tools</span><span class="tag">Fusion Projects</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">03 — Technical Skills</p>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <p class="skill-group-name">Systems</p>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-name">Distributed Systems</span><div class="skill-bar"><div class="skill-fill" data-width="97"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Capacity Management</span><div class="skill-bar"><div class="skill-fill" data-width="97"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Autoscaling</span><div class="skill-bar"><div class="skill-fill" data-width="93"></div></div></div>
+            <div class="skill-item"><span class="skill-name">System Design</span><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-name">Infrastructure</p>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-name">Multi-cloud (AWS / GCP)</span><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Observability & Metrics</span><div class="skill-bar"><div class="skill-fill" data-width="93"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Platform Engineering</span><div class="skill-bar"><div class="skill-fill" data-width="92"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Data Center Ops</span><div class="skill-bar"><div class="skill-fill" data-width="87"></div></div></div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-name">Leadership</p>
+          <div class="skill-items">
+            <div class="skill-item"><span class="skill-name">Technical Strategy</span><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Cross-org Alignment</span><div class="skill-bar"><div class="skill-fill" data-width="93"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Eng. Mentorship (IC5–IC6)</span><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+            <div class="skill-item"><span class="skill-name">Team Building</span><div class="skill-bar"><div class="skill-fill" data-width="90"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Publications & Talks ── -->
+  <section id="publications">
+    <div class="container">
+      <p class="section-label">04 — Research & Speaking</p>
+
+      <div class="pub-grid">
+        <div class="pub-card">
+          <p class="pub-type">Paper · OSDI '23</p>
+          <p class="pub-title">Global Capacity Management with Flux</p>
+          <p class="pub-venue">17th USENIX Symposium on Operating Systems Design and Implementation — one of the most prestigious conferences in distributed systems.</p>
+          <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=SJrSTyYAAAAJ&citation_for_view=SJrSTyYAAAAJ:2osOgNQ5qMEC" target="_blank" class="pub-link">Google Scholar →</a>
+        </div>
+        <div class="pub-card">
+          <p class="pub-type">Blog · Meta Engineering</p>
+          <p class="pub-title">Viewing the World as a Computer: Global Capacity Management at Meta</p>
+          <p class="pub-venue">Published in Meta's Data Center Engineering blog, reaching engineers and researchers worldwide.</p>
+          <a href="#" class="pub-link">Read article →</a>
+        </div>
+        <div class="pub-card">
+          <p class="pub-type">IEEE · INDICON 2015</p>
+          <p class="pub-title">Mathematical Analysis of Constant Switching Frequency in Four-Leg Inverter DSTATCOM</p>
+          <p class="pub-venue">2015 Annual IEEE India Conference (INDICON).</p>
+          <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&hl=en&user=SJrSTyYAAAAJ" target="_blank" class="pub-link">Google Scholar →</a>
+        </div>
+        <div class="pub-card">
+          <p class="pub-type">IEEE · INDICON 2012</p>
+          <p class="pub-title">Virtual Laboratory Environment using MATLAB-GUI for Teaching Induction Generators</p>
+          <p class="pub-venue">2012 Annual IEEE India Conference (INDICON).</p>
+          <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=SJrSTyYAAAAJ&citation_for_view=SJrSTyYAAAAJ:d1gkVwhDpl0C" target="_blank" class="pub-link">Google Scholar →</a>
+        </div>
+      </div>
+
+      <p class="section-label" style="margin-top: 3rem;">Conference Talks</p>
+      <div class="talks-list">
+        <div class="talk-item">
+          <a href="https://atscaleconference.com/videos/global-capacity-management-at-meta/" target="_blank" class="talk-name" style="text-decoration:none;color:var(--ink);transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink)'">Global Capacity Management at Meta</a>
+          <span class="talk-conf">@Scale Conference</span>
+        </div>
+        <div class="talk-item">
+          <a href="https://www.infoq.com/presentations/global-capacity-management/" target="_blank" class="talk-name" style="text-decoration:none;color:var(--ink);transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink)'">Global Capacity Management through Strategic Demand Allocation</a>
+          <span class="talk-conf">QCon Conference</span>
+        </div>
+      </div>
+
+      <p class="section-label" style="margin-top: 3rem;">Judging & Panels</p>
+      <div class="judge-grid">
+        <div class="judge-card">
+          <p class="judge-org"><a href="https://blackambitionprize.com/" target="_blank" style="color:var(--ink);text-decoration:none;">Black Ambition Ignition Grant</a></p>
+          <p class="judge-role">by Pharrell Williams<br/>Semifinalist & Expert Judge<br/>2023 – 2025</p>
+        </div>
+        <div class="judge-card">
+          <p class="judge-org">Meta Horizon Creator Competition</p>
+          <p class="judge-role" style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.25rem;">
+            <a href="https://developers.meta.com/horizon/blog/horizon-worlds-mobile-competition-1M-genre-showdown-creator-quest/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.78rem;">Mobile Genre Showdown · Apr 2025</a>
+            <a href="https://mhcp-open-source-competition.devpost.com/project-gallery?page=2" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.78rem;">Open Source Champions · Sept 2025</a>
+            <a href="https://mhcp-mobile-innovation.devpost.com/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.78rem;">Mobile Innovation · Dec 2025</a>
+            <span style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.15rem;">Expert Judge · All three</span>
+          </p>
+        </div>
+        <div class="judge-card">
+          <p class="judge-org">Columbia University</p>
+          <p class="judge-role"><a href="https://entrepreneurship.engineering.columbia.edu/ignition-grants/" target="_blank" style="color:var(--accent);text-decoration:none;">Ignition Grant</a> Judge 2022<br/>Alumni Panel Speaker</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Education ── -->
+  <section id="education">
+    <div class="container">
+      <p class="section-label">06 — Education</p>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <h3 class="edu-degree">Master of Science,<br />Computer Science</h3>
+          <p class="edu-school">Columbia University</p>
+          <p class="edu-meta">New York, NY · May 2017</p>
+          <p class="edu-courses">Algorithms · Microservices & APIs · Advanced Database Systems · Advanced Software Engineering</p>
+        </div>
+        <div class="edu-card">
+          <h3 class="edu-degree">B.Tech, Electrical &amp;<br />Electronics Engineering</h3>
+          <p class="edu-school">NIT Tiruchirappalli</p>
+          <p class="edu-meta">India · May 2013</p>
+          <p class="edu-courses">Data Structures & Algorithms · Object-Oriented Programming · Operating Systems</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">07 — Contact</p>
+      <div class="contact-inner">
+        <div>
+          <h2 class="contact-heading">Let's connect.</h2>
+          <p class="contact-sub">Open to conversations about senior / staff+ engineering roles, infrastructure at scale, or distributed systems research. My inbox is always open.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:ranji2612@gmail.com" class="contact-link">
+            <span class="contact-link-label">EMAIL</span>
+            <span class="contact-link-val">ranji2612@gmail.com</span>
+          </a>
+          <a href="https://www.linkedin.com/in/ranji2612/" target="_blank" class="contact-link">
+            <span class="contact-link-label">LINKEDIN</span>
+            <span class="contact-link-val">linkedin.com/in/ranji2612</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <footer>
+      <span class="footer-copy">© 2026 Ranjith Kumar Shanmuga Visvanathan</span>
+      <span class="footer-copy">San Francisco, CA</span>
+    </footer>
+  </div>
+
+  <script>
+    const expItems = document.querySelectorAll('.exp-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    expItems.forEach(el => observer.observe(el));
+
+    const fills = document.querySelectorAll('.skill-fill');
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.width = entry.target.dataset.width + '%';
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    fills.forEach(el => barObserver.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 120) current = sec.id; });
+      navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : ''; });
+    });
+  </script>
+</body>
+</html>
